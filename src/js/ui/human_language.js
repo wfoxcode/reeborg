@@ -124,18 +124,14 @@ function update_home_url (lang) {
     switch(lang) {
         case "fr":
         case "fr-en":
-            $("#logo").prop("href", "index_fr.html");
             break;
         case "cn":
         case "cn-en":
-            $("#logo").prop("href", "index_cn.html");
             break;
         case "en":
         case "en-fr":
-            $("#logo").prop("href", "index_en.html");
             break;
         default:
-            $("#logo").prop("href", "index_en.html");
     }
 }
 
