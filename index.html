@@ -38,68 +38,10 @@
     RUR.DEFAULT_MENU_EN = '/worlds/menus/sk_menu.json';
     RUR.DEFAULT_MENU_FR = '/worlds/menus/select_collection_fr.json';
     RUR.DEFAULT_MENU_CN = '/worlds/menus/select_collection_cn.json';
-
-    function handleFileDrops() {    
-      var dropArea = document.getElementById("dropArea");
-
-      dropArea.ondragover = function(evt) {
-        console.log("dragging")
-        evt.preventDefault();        
-      };
-
-      dropArea.ondrop = function(evt) {
-        evt.preventDefault();
-        let droppedFileReader = new FileReader();
-
-        droppedFileReader.onload = function(e) {
-            let content, parts, target;
-            switch(RUR.state.input_method) {
-                case "python":
-                case "javascript":
-                    target = editor;
-                    break;
-                case "blockly-py":
-                case "blockly-js":
-                    target = RUR.blockly;
-                    break;
-                case "py-repl":
-                    alert(RUR.translate(
-                            "No solution can be loaded when using REPL (Py).")
-                         );
-                    return;
-            }
-            content = droppedFileReader.result;
-            parts = content.split(RUR.library_separator());
-            if (parts.length == 2) {
-                library.setValue(parts[1]);
-            }
-            target.setValue(parts[0]);
-            fileInput.value = '';
-        };
-
-        if (evt.dataTransfer.items) {
-          file = evt.dataTransfer.files[0];
-          // We assume that the file name has been saved with the default
-          //    world name.py
-          // where "world name" is the name of the corresponding world as
-          // shown in the HTML select. We thus remove the .py extension
-          // and try to load that world, for convenience.
-          let worldToLoad = file.name.split(".")[0];
-          let worldURL = RUR.world_selector.url_from_shortname(worldToLoad);
-          if (worldURL !== undefined) {
-              RUR.world_selector.set_url(worldURL);
-          }
-          RUR.reload();
-          droppedFileReader.readAsText(file);
-        };
-      };
-    };
-
-    window.onload = handleFileDrops;
   </script>
 </head>
 <body>
-  <div id="dropArea" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
+  <div id="dropArea">
   <header class="blue-gradient green-border">
     <a id="logo">
       <img src="src/images/robot_e.png" alt="logo">
@@ -213,7 +155,7 @@
       <button class="blue-gradient" id="reverse-step">
         <img src="src/images/reverse_step.png" alt="reverse step">
       </button>
-      <button class="blue-gradient" id="run" title="run">
+      <button class="blue-gradient" id="run" title="run (ctrl-enter)">
         <img src="src/images/play.png" alt="run">
       </button>
       <button class="blue-gradient" id="step" title="step" disabled>
@@ -234,10 +176,10 @@
       <input id="frame-selector" class="disabled" type="range" min="0" value="0" step="1"/>
       <span id="frame-id">0/0</span>
       <button id="save-solution-btn" class="solution-button">
-        <img src="src/images/save_program.png" alt="Save solution">
+        <img src="src/images/save_program.png" alt="Save solution (ctrl-s)">
       </button>
       <button id="open-solution-btn" class="solution-button">
-        <img src="src/images/open_program.png" alt="Open solution">
+        <img src="src/images/open_program.png" alt="Open solution (ctrl-o)">
       </button>
     </div>
     <div id="canvas-wrapper">
