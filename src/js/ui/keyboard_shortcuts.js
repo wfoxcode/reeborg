@@ -126,6 +126,11 @@ document.onkeydown = function (e) {
         e.preventDefault();
         loadSolution();
     }
+    if (e.key == "Enter" && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+        e.preventDefault();
+        RUR.reload();
+        $("#run").click(); //run code on ctrl-enter (or cmd-enter)
+      }
 };
 
 $(document).ready(function() {
