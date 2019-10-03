@@ -33,6 +33,7 @@ require("./listeners/onclick.js");
 
 // the following are not required by any other module
 require("./ui/keyboard_shortcuts.js");
+require("./ui/drag_drop_file_loading.js");
 require("./utils/maze.js");
 require("./utils/search.js");
 require("./utils/path_utils.js");
