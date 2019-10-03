@@ -10363,63 +10363,6 @@ $(document).ready(function() {
     });
 });
 
-function handleFileDrops() {    
-    var dropArea = document.getElementById("dropArea");
-
-    dropArea.ondragover = function(evt) {
-    //   console.log("dragging")
-      evt.preventDefault();        
-    };
-
-    dropArea.ondrop = function(evt) {
-      evt.preventDefault();
-      let droppedFileReader = new FileReader();
-
-      droppedFileReader.onload = function(e) {
-          let content, parts, target;
-          switch(RUR.state.input_method) {
-              case "python":
-              case "javascript":
-                  target = editor;
-                  break;
-              case "blockly-py":
-              case "blockly-js":
-                  target = RUR.blockly;
-                  break;
-              case "py-repl":
-                  alert(RUR.translate(
-                          "No solution can be loaded when using REPL (Py).")
-                       );
-                  return;
-          }
-          content = droppedFileReader.result;
-          parts = content.split(RUR.library_separator());
-          if (parts.length == 2) {
-              library.setValue(parts[1]);
-          }
-          target.setValue(parts[0]);
-          fileInput.value = '';
-      };
-
-      if (evt.dataTransfer.items) {
-        file = evt.dataTransfer.files[0];
-        // We assume that the file name has been saved with the default
-        //    world name.py
-        // where "world name" is the name of the corresponding world as
-        // shown in the HTML select. We thus remove the .py extension
-        // and try to load that world, for convenience.
-        let worldToLoad = file.name.split(".")[0];
-        let worldURL = RUR.world_selector.url_from_shortname(worldToLoad);
-        if (worldURL !== undefined) {
-            RUR.world_selector.set_url(worldURL);
-        }
-        RUR.reload();
-        droppedFileReader.readAsText(file);
-      };
-    };
-};
-
-$(document).ready(handleFileDrops);
 },{"../listeners/onclick.js":20,"../rur.js":39,"./../translator.js":41,"./user_progress.js":58}],50:[function(require,module,exports){
 require("./../rur.js");
 require("./../playback/play.js");
