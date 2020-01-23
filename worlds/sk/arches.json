@@ -1,0 +1,93 @@
+{
+  "robots": [
+    {
+      "x": 1,
+      "y": 1,
+      "_prev_x": 1,
+      "_prev_y": 1,
+      "_prev_orientation": 0,
+      "objects": {},
+      "_orientation": 0,
+      "_is_leaky": true,
+      "_trace_history": [],
+      "_trace_style": "default",
+      "_trace_color": "seagreen",
+      "__id": 18,
+      "model": "classic",
+      "possible_initial_positions": [
+        [
+          1,
+          1
+        ]
+      ]
+    }
+  ],
+  "walls": {},
+  "description": [
+    "<h2>Fixing Arches</h2><p>Reeborg is going to be fixing up some architectural damage done to arches in a building. Some of the stones (represented by squares) are missing from the columns supporting the arches. Reeborg needs to fill in all of the missing stones in the columns (shown as gray squares, where Reeborg needs to put down a square). Each time you reload the world, the missing stones will be in different locations.</p> <p>Note as well that Reeborg can begin in any location (though it will be inside the building). <em>Hint: you might want to send Reeborg to the bottom left corner of the screen to begin!</em></p>"
+  ],
+  "small_tiles": true,
+  "rows": 12,
+  "cols": 29,
+  "onload": [
+    "#setting up world with python",
+    "",
+    "import random",
+    "",
+    "width = 29",
+    "height = 12",
+    "",
+    "RUR.set_world_size(width, height)",
+    "RUR.give_object_to_robot(\"square\",99)",
+    "",
+    "#Create the roof",
+    "obstacles = []",
+    "for i in range(width):",
+    "    h = random.randint(8,12)",
+    "    obstacles.append(h)",
+    "    RUR.add_wall(\"south\",i+1,h)",
+    "",
+    "#join the roof (vertically on the sides)",
+    "for i in range(width-1):",
+    "    n = obstacles[i]",
+    "    n2 = obstacles[i+1]",
+    "    if n < n2:",
+    "        for j in range(n,n2):",
+    "            RUR.add_wall(\"east\",i+1,j)    ",
+    "    elif n2 < n:",
+    "        for j in range(n2,n):",
+    "            RUR.add_wall(\"east\",i+1,j)  ",
+    "        ",
+    "",
+    "#create goals",
+    "options = {'goal' : True}",
+    "for x in range(0, width, 4):",
+    "    for y in range(1,obstacles[x]):",
+    "        some_choice = random.randrange(1,100)",
+    "        if some_choice > 60:",
+    "            RUR.add_object(\"square\", x+1,y, options)    ",
+    "        else:",
+    "            RUR.add_object(\"square\", x+1,y)    ",
+    "            RUR.add_object(\"square\", x+1,y, options)",
+    "",
+    "#add extra starting locations",
+    "for x in range(0, width):",
+    "    y = random.randrange(1,obstacles[x])",
+    "    RUR.add_initial_position(x+1, y)",
+    "",
+    ""
+  ],
+  "goal": {
+    "possible_final_positions": [
+      [
+        2,
+        1
+      ]
+    ],
+    "position": {
+      "image": "racing_flag",
+      "x": 2,
+      "y": 1
+    }
+  }
+}
