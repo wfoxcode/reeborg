@@ -50,12 +50,21 @@ function handleFileDrops() {
         // shown in the HTML select. We thus remove the .py extension
         // and try to load that world, for convenience.
         let worldToLoad = file.name.split(".")[0];
-        let worldURL = RUR.world_selector.url_from_shortname(worldToLoad);
-        if (worldURL !== undefined) {
-            RUR.world_selector.set_url(worldURL);
+        
+        // If student attempts to click the run button, but accidentally
+        // drags the icon, the content of the editor will become gibberish
+        // (the bytes of the png file). To avoid this, only load the file if 
+        // it's file extension is .py or .js.
+        let fileExtension = file.name.split(".")[1];
+        
+        if (fileExtension === "py" || fileExtension === "js") {
+            let worldURL = RUR.world_selector.url_from_shortname(worldToLoad);
+            if (worldURL !== undefined) {
+                RUR.world_selector.set_url(worldURL);
+            }
+            RUR.reload();
+            droppedFileReader.readAsText(file);
         }
-        RUR.reload();
-        droppedFileReader.readAsText(file);
       };
     };
 };
