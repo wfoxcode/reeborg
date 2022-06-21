@@ -117,12 +117,12 @@ function loadSolution () {
 
 
 document.onkeydown = function (e) {
-    if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+    if (e.code == "KeyS" && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
         e.preventDefault();
         saveSolution();
     }
 
-    if (e.keyCode == 79 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+    if (e.code == "KeyO" && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
         e.preventDefault();
         loadSolution();
     }
@@ -130,7 +130,12 @@ document.onkeydown = function (e) {
         e.preventDefault();
         RUR.reload();
         $("#run").click(); //run code on ctrl-enter (or cmd-enter)
-      }
+    }
+    if (e.key == "F5") {
+        e.preventDefault();
+        RUR.reload();
+        $("#run").click(); //run code when F5 is pressed
+    }
 };
 
 $(document).ready(function() {
