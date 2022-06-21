@@ -9820,14 +9820,13 @@ function handleFileDrops() {
         // and try to load that world, for convenience.
         let worldToLoad = file.name.split(".")[0];
         
-        // If student's attempt to click the run button, but accidentally
-        // drag the icon, the content of the editor will become gibberish
+        // If student attempts to click the run button, but accidentally
+        // drags the icon, the content of the editor will become gibberish
         // (the bytes of the png file). To avoid this, only load the file if 
         // it's file extension is .py or .js.
         let fileExtension = file.name.split(".")[1];
         
         if (fileExtension === "py" || fileExtension === "js") {
-            console.log('here');
             let worldURL = RUR.world_selector.url_from_shortname(worldToLoad);
             if (worldURL !== undefined) {
                 RUR.world_selector.set_url(worldURL);
@@ -10348,12 +10347,12 @@ function loadSolution () {
 
 
 document.onkeydown = function (e) {
-    if (e.keyCode == 83 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+    if (e.code == "KeyS" && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
         e.preventDefault();
         saveSolution();
     }
 
-    if (e.keyCode == 79 && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
+    if (e.code == "KeyO" && (navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)) {
         e.preventDefault();
         loadSolution();
     }
@@ -10361,7 +10360,12 @@ document.onkeydown = function (e) {
         e.preventDefault();
         RUR.reload();
         $("#run").click(); //run code on ctrl-enter (or cmd-enter)
-      }
+    }
+    if (e.key == "F5") {
+        e.preventDefault();
+        RUR.reload();
+        $("#run").click(); //run code when F5 is pressed
+    }
 };
 
 $(document).ready(function() {
