@@ -75,6 +75,7 @@
     "    y = random.randrange(1,obstacles[x])",
     "    RUR.add_initial_position(x+1, y)",
     "",
+    "RUR.set_random_orientation()",
     ""
   ],
   "goal": {
