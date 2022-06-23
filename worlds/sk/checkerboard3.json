@@ -1,0 +1,48 @@
+{
+  "robots": [
+    {
+      "x": 1,
+      "y": 1,
+      "_prev_x": 1,
+      "_prev_y": 1,
+      "_prev_orientation": 0,
+      "objects": {},
+      "_orientation": 0,
+      "_is_leaky": true,
+      "_trace_history": [],
+      "_trace_style": "default",
+      "_trace_color": "seagreen",
+      "__id": 4,
+      "model": "classic"
+    }
+  ],
+  "walls": {},
+  "description": [
+    "A randomly sized world, in which you need to create a checkerboard pattern."
+  ],
+  "small_tiles": false,
+  "onload": [
+    "#setting up world with python",
+    "",
+    "import random",
+    "",
+    "width = random.randrange(4, 16, 2)",
+    "height = random.randrange(4, 16, 2)",
+    "",
+    "RUR.set_world_size(width, height)",
+    "RUR.give_object_to_robot(\"carrot\",99)",
+    "",
+    "options = {'goal' : True}",
+    "for x in range(1, width+1):",
+    "    for y in range(1, height+1):",
+    "        #create goals",
+    "        if y % 2 == 0 and x % 2 == 0 or y % 2 == 1 and x % 2 == 1:",
+    "            RUR.add_object(\"carrot\", x, y, options)",
+    "        #add extra starting locations",
+    "        else:",
+    "            RUR.add_initial_position(x, y)",
+    "",
+    "RUR.set_random_orientation()",
+    ""
+  ]
+}
