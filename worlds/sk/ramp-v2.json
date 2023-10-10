@@ -28,8 +28,10 @@
     "let options = {'goal' : true};",
     "let j = 1;",
     "for (let i = 1; i <= width; i += 2) {",
-    "    RUR.add_object(\"star\", i, j, options);",
-    "    j += 1;",
+    "    if (j < height) { ",
+    "      RUR.add_object(\"star\", i, j, options);",
+    "      j += 1;",
+    "     }",
     "}"
   ]
 }
